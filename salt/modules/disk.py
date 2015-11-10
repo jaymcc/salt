@@ -84,6 +84,8 @@ def usage(args=None):
             continue
         if line.startswith('Filesystem'):
             continue
+        if "No such file or directory" in line:
+            continue
         if oldline:
             line = oldline + " " + line
         comps = line.split()
@@ -93,8 +95,9 @@ def usage(args=None):
         else:
             oldline = None
         while not comps[1].isdigit():
-            comps[0] = '{0} {1}'.format(comps[0], comps[1])
-            comps.pop(1)
+                comps[0] = '{0} {1}'.format(comps[0], comps[1])
+                comps.pop(1)
+            
         try:
             if __grains__['kernel'] == 'Darwin':
                 ret[comps[8]] = {
